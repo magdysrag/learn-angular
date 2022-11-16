@@ -1,0 +1,29 @@
+<!-- <h1>Hello World magdy {{title}}</h1> -->
+<!-- <div class="container bg-danger">
+  <h1>{{sayHello()}}</h1>
+</div> -->
+<input #inp (keyup.enter)="msg(inp.value)" (focus)="emptyForm()" class="w-25 d-block mx-auto mt-5 " [(ngModel)]="name" [value]="nameval"
+  type="text">
+
+<div class="ps-5 py-2" [hidden]="!name" [class]="clases">
+<div >{{name}}</div> 
+</div>
+<!-- <div class="text-center fs-2 fw-bold text-uppercase">{{name}}</div> -->
+<!-- <div class="text-center fs-2 fw-bold text-uppercase">{{name}}</div> -->
+<div>
+  <ul *ngFor="let i of dataBase">
+    <li class="text-bold text-primary">{{i|uppercase}}</li>
+  </ul>
+</div>
+<p class="ps-3 fw-bold">
+  {{para|firstPipe:25}}
+</p>
+<p>Envelope icon: <span class="glyphicon glyphicon-envelope"></span></p>
+<app-header class="my-2  py-3 text-capitalize"></app-header>
+<div class="container-fluid  text-white ps-0">
+  <div class="row g-0 ">
+    <app-sidebar class="col-2  text-capitalize"></app-sidebar>
+    <order-master class="col-10 my-2 text-dark p-3 text-capitalize"></order-master>
+  </div>
+</div>
+<app-footer class="my-2 bg-dark py-3 text-capitalize"></app-footer>

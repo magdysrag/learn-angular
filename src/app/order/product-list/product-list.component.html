@@ -1,0 +1,71 @@
+<!-- <div class="mb-3">
+    <label for="" class="form-label">Category:</label>
+    two-way-pinding  ngModel refer to input value
+    <select #cat class="form-select form-select-lg" name="" id="" (change)="getCattemplate(cat.value)">
+    <select class="form-select form-select-lg" name="" id="" (change)="getCat($event)">
+    <select class="form-select form-select-lg" name="" id="" [(ngModel)]="selectedCatId" (change)="filterProByCat()">
+        <option selected *ngFor="let cat of catlist" value="{{cat.id}}">{{cat.name}}</option>
+    </select>
+</div> -->
+
+<!-- <button type="button" class="btn btn-primary" (click)="changeCat()">Button</button> -->
+<hr>
+<div class="table-responsive">
+    <table class="table table-">
+        <thead>
+            <tr class="border-bottom-info">
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price </th>
+                <th scope="col">Category </th>
+                <th scope="col">Image</th>
+                <th scope="col">AV-Quantity</th>
+                <th #buyItem scope="col" class="">Buy</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th scope="col">Price </th>
+            <!-- <tr *ngFor="let pro of proList" [class.d-none]="selectedCatId != pro.categoryId"> -->
+
+            <!-- <tr *ngIf="pro.quantity != 0"> -->
+            <!-- <tr [class.d-none]="pro.quantity == 0"> -->
+            <!-- <tr [hidden]="pro.quantity == 0"> -->
+            <ng-container *ngFor="let pro of proListOfCat; index as i; first as state ">
+                <tr [class.bg-secondary]="state" [ngClass]="{'bg-primary': pro.quantity == 0}"
+                    [ngStyle]="{color:  pro.quantity == 0? 'darkgreen':'blue'}">
+                    <!-- save navigation operator -->
+                    <td>{{i+1}}</td>
+                    <td>{{pro.name}}</td>
+                    <td>{{pro.price | currency}}</td>
+                    <td>{{pro.categoryId}}</td>
+                    <td><img LightBox="red" defaultColor="gray" [src]="pro.imgURL" alt=""></td>
+                    <td>
+                        <!-- <div *ngIf="pro.quantity != 0">{{pro.quantity}}</div>
+                        <div *ngIf="pro.quantity == 0">out of stock</div> -->
+                        <!-- <div *ngIf="pro.quantity != 0 ; else outOfStock">{{pro.quantity}}</div>
+                        <ng-template #outOfStock> out of stock</ng-template> -->
+                        <ng-container>
+                            <div [ngSwitch]="pro.quantity">
+                                <div *ngSwitchCase="0">out of stock</div>
+                                <div *ngSwitchCase="1">last item</div>
+                                <div *ngSwitchCase="2">last 2 item</div>
+                                <div *ngSwitchCase="3">last 3 item</div>
+                                <div *ngSwitchDefault>{{pro.quantity}}</div>
+                            </div>
+                        </ng-container>
+                    </td>
+                    <!-- template varible -->
+                    <td><input #item type="number" class="form-control" (keyup.enter)="buy(pro.price , item.value , pro.name , pro.imgURL )"></td>
+                    <td><button type="button" class="btn btn-primary" (click)="buy(pro.price , item.value , pro.name , pro.imgURL )">Buy</button>
+                    </td>
+                </tr>
+            </ng-container>
+
+        </tbody>
+    </table>
+    <hr>
+    <!-- <h2>{{totalPrice}}</h2> -->
+    <!-- <hr> -->
+    <!-- <hr class="bg-info"> -->
+    <!-- <input InputTest type="text"> -->
+</div>

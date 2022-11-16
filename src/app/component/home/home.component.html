@@ -1,0 +1,11 @@
+<h1>{{storeInfo.name}}</h1>
+<img *ngIf="isImgShow" [src]="storeInfo.urlImg" class="img-fluid mt-5" alt="">
+<button type="button" class="btn btn-primary mt-3" (click)="toggleImg()">show</button>
+<h2 class="mt-5 text-left text-info">
+    Our branches first: 
+</h2>
+<ul *ngFor="let branch of storeInfo.branches">
+    <li >
+        {{branch}}
+    </li>
+</ul>

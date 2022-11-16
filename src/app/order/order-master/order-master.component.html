@@ -1,0 +1,49 @@
+<h2>Create Your Order</h2>
+<div class="mb-3">
+    <label for="" class="form-label">Category:</label>
+    <!-- two-way-pinding  ngModel refer to input value -->
+    <!-- <select #cat class="form-select form-select-lg" name="" id="" (change)="getCattemplate(cat.value)"> -->
+    <!-- <select class="form-select form-select-lg" name="" id="" (change)="getCat($event)"> -->
+    <select class="form-select form-select-lg" name="" id="" [(ngModel)]="selectedCatId">
+        <option value="0" selected>All</option>
+        <option selected *ngFor="let cat of catlist" value="{{cat.id}}">{{cat.name}}</option>
+    </select>
+</div>
+<div class="bg-info fw-bold">
+    <app-product-list [sentCatId]="selectedCatId" (totalPriceChange)="onTotalPriceChange($event)"
+        (itemBought)="onItemBought($event)"></app-product-list>
+    <!--                   when this event totalPriceChange happen=> excute this function 
+                           $event this is event send it from puplisher or child component -->
+</div>
+<div *ngIf="buyProduct">
+    <div class="table-responsive mt-3">
+        <table class="table table-primary">
+            <thead>
+                <tr>
+                    <th scope="col">number of product</th>
+                    <th scope="col">product-name</th>
+                    <th scope="col">product-imge</th>
+                    <th scope="col">item-price</th>
+                    <th scope="col">product-quantity</th>
+                    <th scope="col">product-price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="" *ngFor="let prd of productSelected index as i">
+                    <td>{{i+1}}</td>
+                    <td>{{prd.prdName}}</td>
+                    <td><img src="{{prd.img}}" alt=""></td>
+                    <td>{{prd.prdItemPrice}}</td>
+                    <td><input  #item (keyup.enter)="itemPrice(item.value , prd.prdItemPrice , prd.prdName)"
+                            class="form-control" type="number" [value]="prd.prdQuantity"></td>
+                    <td  >{{ prd.prdPrice}}</td>
+                    <td><button class="btn btn-danger" (click)="removeProduct(prd.prdName)">Remove</button></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="btn btn-primary text-uppercase mt-3" (click)="calcPrice()">bought</div>
+
+<h3>Total Price : {{total}}</h3>
