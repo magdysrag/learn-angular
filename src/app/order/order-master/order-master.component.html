@@ -23,7 +23,6 @@
                     <th scope="col">number of product</th>
                     <th scope="col">product-name</th>
                     <th scope="col">product-imge</th>
-                    <th scope="col">item-price</th>
                     <th scope="col">product-quantity</th>
                     <th scope="col">product-price</th>
                 </tr>
@@ -31,10 +30,9 @@
             <tbody>
                 <tr class="" *ngFor="let prd of productSelected index as i">
                     <td>{{i+1}}</td>
-                    <td>{{prd.prdName}}</td>
+                    <td >{{prd.prdName}}</td>
                     <td><img src="{{prd.img}}" alt=""></td>
-                    <td>{{prd.prdItemPrice}}</td>
-                    <td><input  #item (keyup.enter)="itemPrice(item.value , prd.prdItemPrice , prd.prdName)"
+                    <td><input  #item (keyup.enter)="itemPrice(item.value  , prd.prdName)"
                             class="form-control" type="number" [value]="prd.prdQuantity"></td>
                     <td  >{{ prd.prdPrice}}</td>
                     <td><button class="btn btn-danger" (click)="removeProduct(prd.prdName)">Remove</button></td>

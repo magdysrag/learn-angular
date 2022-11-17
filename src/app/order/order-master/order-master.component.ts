@@ -32,11 +32,11 @@ export class OrderMasterComponent implements OnInit {
   updatedProductQuantity: any;
   productSelected: CardVM[] = [];
   onItemBought(selectedItem: CardVM) {
+    console.log(selectedItem);
+    
     selectedItem.prdQuantity <= 0
       ? (selectedItem.prdQuantity = 1)
       : selectedItem.prdQuantity;
-    console.log(selectedItem.prdItemPrice);
-
     let state = false;
     function compare(
       productSelectedTaple: CardVM[],
@@ -52,13 +52,8 @@ export class OrderMasterComponent implements OnInit {
       }
       return state;
     }
-    console.log(selectedItem.prdPrice);
-
     selectedItem.prdPrice = selectedItem.prdPrice * selectedItem.prdQuantity;
-    console.log(this.productSelected);
     state = compare(this.productSelected, selectedItem);
-
-    console.log(compare(this.productSelected, selectedItem));
     if (!state) {
       this.productSelected.push(selectedItem);
       this.buyProduct = this.productSelected.length;
@@ -70,16 +65,22 @@ export class OrderMasterComponent implements OnInit {
         }
       }
     }
+    this.calcPrice();
   }
   total: number = 0;
-  itemPrice(item: string, price: number, name: string) {
-    console.log(price);
-
+  itemPrice(item: string, name: string) {
     for (let i = 0; i < this.productSelected.length; i++) {
       if (this.productSelected[i].prdName == name) {
+        let priceOfItem =
+          this.productSelected[i].prdPrice /
+          this.productSelected[i].prdQuantity;
+        console.log();
+
+        console.log('****');
+
         this.productSelected[i].prdQuantity = +item;
         this.productSelected[i].prdPrice =
-          this.productSelected[i].prdQuantity * price;
+          this.productSelected[i].prdQuantity * priceOfItem;
       }
     }
     this.calcPrice();
@@ -92,7 +93,7 @@ export class OrderMasterComponent implements OnInit {
     }
     this.calcPrice();
   }
-   calcPrice() {
+  calcPrice() {
     this.total = 0;
     this.productSelected.forEach((product) => {
       this.total += product.prdPrice;

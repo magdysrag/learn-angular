@@ -55,8 +55,8 @@
                         </ng-container>
                     </td>
                     <!-- template varible -->
-                    <td><input #item type="number" class="form-control" (keyup.enter)="buy(pro.price , item.value , pro.name , pro.imgURL )"></td>
-                    <td><button type="button" class="btn btn-primary" (click)="buy(pro.price , item.value , pro.name , pro.imgURL )">Buy</button>
+                    <td><input #item type="number" class="form-control" (keyup.enter)="buy(pro.price , item.value , pro.name , pro.imgURL, pro.quantity );quantityRange(item.value  ,pro.quantity)"></td>
+                    <td><button type="button" class="btn btn-primary" (click)="buy(pro.price , item.value , pro.name , pro.imgURL, pro.quantity );quantityRange(item.value  ,pro.quantity)">Buy</button>
                     </td>
                 </tr>
             </ng-container>

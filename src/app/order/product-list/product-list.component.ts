@@ -77,16 +77,15 @@ export class ProductListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {}
-  buy(itemPrice: number, QuantatyItem: any, prdName: string, prdImg:string) {
+  buy(itemPrice: number, QuantatyItem: any, prdName: string, prdImg: string ,avalible:number) {
     let count: number = +QuantatyItem;
     let price: number = itemPrice;
     let produtListBought: CardVM = {
       prdName: prdName,
       prdPrice: itemPrice,
-      prdItemPrice: price,
       prdQuantity: count,
       img: prdImg,
-
+      avalibleCuantity:avalible
     };
     this.totalPrice += count * price;
     //
