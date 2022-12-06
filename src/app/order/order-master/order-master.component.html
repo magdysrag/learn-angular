@@ -9,11 +9,13 @@
         <option selected *ngFor="let cat of catlist" value="{{cat.id}}">{{cat.name}}</option>
     </select>
 </div>
-<div class="bg-info fw-bold">
+<div class="bg-danger fw-bold p-5">
     <app-product-list [sentCatId]="selectedCatId" (totalPriceChange)="onTotalPriceChange($event)"
-        (itemBought)="onItemBought($event)"></app-product-list>
+    (itemBought)="onItemBought($event)"></app-product-list>
     <!--                   when this event totalPriceChange happen=> excute this function 
-                           $event this is event send it from puplisher or child component -->
+                           $event this is event send it from puplisher or child component to parent to use it  -->
+                           <!-- هنا انا بقوله يا ابن انت عندك حدث اسمه تغير السعر الاجمالى 
+                           لما يحصل نفذلى الوظيفه اللى اسمها كذا  ومعاها السعر   -->
 </div>
 <div *ngIf="buyProduct">
     <div class="table-responsive mt-3">
@@ -32,7 +34,7 @@
                     <td>{{i+1}}</td>
                     <td >{{prd.prdName}}</td>
                     <td><img src="{{prd.img}}" alt=""></td>
-                    <td><input  #item (keyup.enter)="itemPrice(item.value  , prd.prdName)"
+                    <td><input min="1" max="{{prd.avalibleCuantity}}"  #item  (keyup.enter)="itemPrice(item.value  , prd.prdName)"
                             class="form-control" type="number" [value]="prd.prdQuantity"></td>
                     <td  >{{ prd.prdPrice}}</td>
                     <td><button class="btn btn-danger" (click)="removeProduct(prd.prdName)">Remove</button></td>
@@ -42,6 +44,9 @@
         </table>
     </div>
 </div>
-<div class="btn btn-primary text-uppercase mt-3" (click)="calcPrice()">bought</div>
-
-<h3>Total Price : {{total}}</h3>
+<div class="btn btn-primary text-uppercase mt-3" (click)="onBoughtUpdatQuantity()">bought</div>
+<div >
+    <input #item   class="form-control" min="1" max="10" required type="number">
+</div>
+<h3>Total Price From new taple : {{total}}</h3> 
+<!-- <h3>Total Price from onTotalPriceChange : {{reciveOrderTotalPrice}}</h3>  -->

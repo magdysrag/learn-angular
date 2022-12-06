@@ -1,3 +1,5 @@
+import { MainLayoutComponent } from './component/mainLayout/mainLayout.component';
+import { LoginComponent } from './component/login/login.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -14,6 +16,9 @@ import { FormsModule } from '@angular/forms';
 import { LightBoxDirective } from './directives/light-box.directive';
 import { InputTestDirective } from './directives/input-test.directive';
 import { FirstPipePipe } from './pipe/first-pipe.pipe';
+import { ArabicTsDirective } from './directives/arabic.ts.directive';
+import { NotFoundComponent } from './component/not-found/not-found.component';
+import { DetailsComponent } from './component/details/details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,14 +31,15 @@ import { FirstPipePipe } from './pipe/first-pipe.pipe';
     LightBoxDirective,
     InputTestDirective,
     FirstPipePipe,
-    OrderMasterComponent
+    OrderMasterComponent,
+    ArabicTsDirective,
+    NotFoundComponent,
+    LoginComponent,
+    MainLayoutComponent,
+    DetailsComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -20,7 +20,9 @@
                 <th scope="col">Category </th>
                 <th scope="col">Image</th>
                 <th scope="col">AV-Quantity</th>
-                <th #buyItem scope="col" class="">Buy</th>
+                <th scope="col">order</th>
+                <th scope="col">details</th>
+                <th #buyItem scope="col" class="">ِAdd To Card</th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +41,7 @@
                     <td>{{pro.price | currency}}</td>
                     <td>{{pro.categoryId}}</td>
                     <td><img LightBox="red" defaultColor="gray" [src]="pro.imgURL" alt=""></td>
+                    <!-- <td><img [LightBox]="readFromPropTs" defaultColor="gray" [src]="pro.imgURL" alt=""></td> -->
                     <td>
                         <!-- <div *ngIf="pro.quantity != 0">{{pro.quantity}}</div>
                         <div *ngIf="pro.quantity == 0">out of stock</div> -->
@@ -55,8 +58,18 @@
                         </ng-container>
                     </td>
                     <!-- template varible -->
-                    <td><input #item type="number" class="form-control" (keyup.enter)="buy(pro.price , item.value , pro.name , pro.imgURL, pro.quantity );quantityRange(item.value  ,pro.quantity)"></td>
-                    <td><button type="button" class="btn btn-primary" (click)="buy(pro.price , item.value , pro.name , pro.imgURL, pro.quantity );quantityRange(item.value  ,pro.quantity)">Buy</button>
+                    <td><input #item type="number" [readonly]="pro.quantity==0" ngModel="required" min="1"
+                            max="{{pro.quantity}}" class="form-control"
+                            (keyup.enter)="buy(pro.price , item.value , pro.name , pro.imgURL, pro.quantity ,$event)">
+                    </td>
+                    <!-- <td><button type="button" class="btn btn-primary" (click)="openDetails(pro.id)">Details</button>
+                    </td> -->
+                    <td><button type="button" class="btn btn-primary"
+                            [routerLink]="['/products',pro.id]">Details</button>
+                    </td>
+                    <td><button type="button" class="btn btn-primary"
+                            (click)="buy(pro.price , item.value , pro.name , pro.imgURL, pro.quantity,$event )">ِAdd To
+                            Card</button>
                     </td>
                 </tr>
             </ng-container>

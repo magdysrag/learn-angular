@@ -1,9 +1,11 @@
+import { StaticServiceService } from './../../services/static-service.service';
 import { CardVM } from './../../Models/card-vm';
 import { EventEmitter, OnChanges, Output, SimpleChanges } from '@angular/core';
 // import { Icategory } from './../../Models/icategory';
 import { Iproduct } from './../../Models/iproduct';
 import { Component, Input, OnInit } from '@angular/core';
-import { outputAst } from '@angular/compiler';
+import { outputAst, TypeofExpr } from '@angular/compiler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -11,108 +13,66 @@ import { outputAst } from '@angular/compiler';
   styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements OnInit, OnChanges {
-  proList: Iproduct[];
+  // proList: Iproduct[];
   proListOfCat: Iproduct[] = [];
   @Input() sentCatId: number = 0;
-  @Output() totalPriceChange: EventEmitter<number>;
+  @Output() totalPriceChange: EventEmitter<number> = new EventEmitter<number>();
   @Output() itemBought: EventEmitter<CardVM>;
   totalPrice: number = 0;
-  constructor() {
-    this.totalPriceChange = new EventEmitter<number>();
+  constructor(private staticSer: StaticServiceService, private router: Router) {
+    // this.totalPriceChange = new EventEmitter<number>();
     this.itemBought = new EventEmitter<CardVM>();
-    this.proList = [
-      {
-        id: 100,
-        name: 'lenovoThinked laptop',
-        price: 10,
-        quantity: 1,
-        imgURL: 'https://fakeimg.pl/150/',
-        categoryId: 1,
-      },
-      {
-        id: 200,
-        name: 'apple macBook laptop',
-        price: 25,
-        quantity: 0,
-        imgURL: 'https://fakeimg.pl/150/',
-        categoryId: 1,
-      },
-      {
-        id: 300,
-        name: 'lenovo tap 2',
-        price: 30,
-        quantity: 2,
-        imgURL: 'https://fakeimg.pl/150/',
-        categoryId: 2,
-      },
-      {
-        id: 400,
-        name: 'apple tap',
-        price: 2,
-        quantity: 0,
-        imgURL: 'https://fakeimg.pl/150/',
-        categoryId: 2,
-      },
-      {
-        id: 500,
-        name: 'samsung Note 10',
-        price: 50,
-        quantity: 3,
-        imgURL: 'https://fakeimg.pl/150/',
-        categoryId: 3,
-      },
-      {
-        id: 600,
-        name: 'samsung Note 100',
-        price: 5,
-        quantity: 5,
-        imgURL: 'https://fakeimg.pl/150/',
-        categoryId: 3,
-      },
-    ];
-    this.proListOfCat = this.proList;
-  }
-  ngOnChanges(): void {
-    this.filterProByCat();
   }
 
-  ngOnInit(): void {}
-  buy(itemPrice: number, QuantatyItem: any, prdName: string, prdImg: string ,avalible:number) {
-    let count: number = +QuantatyItem;
+  ngOnChanges(): void {
+    this.proListOfCat = this.staticSer.getProductByCatId(this.sentCatId);
+    // this.filterProByCat();
+  }
+  isAvailable: boolean = false;
+  ngOnInit(): void {
+    this.proListOfCat = this.staticSer.getAllProduct();
+  }
+  buy(
+    itemPrice: number,
+    QuantatyItem: any,
+    prdName: string,
+    prdImg: string,
+    avalible: number,
+    event: any
+  ) {
+    let count: number = +QuantatyItem <= avalible ? +QuantatyItem : avalible;
     let price: number = itemPrice;
     let produtListBought: CardVM = {
       prdName: prdName,
       prdPrice: itemPrice,
       prdQuantity: count,
       img: prdImg,
-      avalibleCuantity:avalible
+      avalibleCuantity: avalible,
     };
+    console.log(event.target.required);
     this.totalPrice += count * price;
-    //
     //excute your event to puplisher it
     //on click on Buy total price change in this evnt
     // total price computing send event (emit with price  )
-    //
-    this.totalPriceChange.emit(this.totalPrice);
-    this.itemBought.emit(produtListBought);
+    // هو ده المكان اللى هنفذ فيه الحدث بتاعى
+    // علشان لما بضعط على الزر الشراء هيحسب السعر
+    this.totalPriceChange.emit(this.totalPrice); // name of event totalPriceChange execute it and send with
+    // event this.totalPrice when I execute this event on any element will  execute function with available total price
+    this.itemBought.emit(produtListBought); // this is output event ececute
   }
-  // changeCat() {
-  //   this.selectedCatId = 2;
-  // }
-  // getCat(event: any) {
-  //   this.selectedCatId = event.target.value;
-  // }
-  // getCattemplate(x: any) {
-  //   this.selectedCatId = +x;
-  // }
   trackByfun(index: number, prd: Iproduct) {
     return prd.id;
   }
-  private filterProByCat() {
-    this.sentCatId == 0
-      ? (this.proListOfCat = this.proList)
-      : (this.proListOfCat = this.proList.filter(
-          (pro) => pro.categoryId == this.sentCatId
-        ));
+  // private filterProByCat() {
+  //   this.sentCatId == 0
+  //     ? (this.proListOfCat = this.proList) // true
+  //     : (this.proListOfCat = this.proList.filter(
+  //         (pro) => pro.categoryId == this.sentCatId
+  //       )); //false
+  //   console.log(this.proListOfCat);
+  // }
+  openDetails(prdId: number) {
+    this.router.navigate(['/product', prdId]);
+    console.log('###########');
   }
 }
