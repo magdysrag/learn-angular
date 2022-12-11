@@ -3,6 +3,6 @@
   "recommendations": [
     "angular.ng-template",
     "shan.code-settings-sync",
-    "Shan.code-settings-sync"
+    "steoates.autoimport"
   ]
 }

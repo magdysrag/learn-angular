@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(
         filter((ad) => ad.includes('friday')),
         map((ad) => `AD: ${ad}`),
-        last(),
+        // last(),
       )
       .subscribe({
         next: (data: string) => {

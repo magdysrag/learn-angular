@@ -13,6 +13,7 @@ import { AboutComponent } from './component/about/about.component';
 import { ProductListComponent } from './order/product-list/product-list.component';
 import { OrderMasterComponent } from './order/order-master/order-master.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { LightBoxDirective } from './directives/light-box.directive';
 import { InputTestDirective } from './directives/input-test.directive';
 import { FirstPipePipe } from './pipe/first-pipe.pipe';
@@ -38,7 +39,7 @@ import { DetailsComponent } from './component/details/details.component';
     MainLayoutComponent,
     DetailsComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule,HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })

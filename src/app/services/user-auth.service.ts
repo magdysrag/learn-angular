@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Observer } from 'rxjs';
+import { BehaviorSubject, Observable, Observer, observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,8 @@ export class UserAuthService {
     //call login API, and get access token
     let userToken = '123456789';
     localStorage.setItem('token', userToken);
-    this.isLoggedSubject.next(true);
+    this.isLoggedSubject.next(true); // 
+    // this.isLoggedSubject.subscribe();//
   }
   logout() {
     localStorage.removeItem('token');
@@ -23,6 +24,6 @@ export class UserAuthService {
     return localStorage.getItem('token') ? true : false;
   }
   getLoggedStatus() {
-    return this.isLoggedSubject; //as Observable<boolean> if I want force return Observable or Observer Observer<boolean>
+    return this.isLoggedSubject as Observable<boolean>; //as Observable<boolean> if I want force return Observable or Observer Observer<boolean>
   } // can return observer or observable
 }
