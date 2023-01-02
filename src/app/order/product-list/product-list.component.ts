@@ -1,6 +1,14 @@
+import { Subscription } from 'rxjs';
+import { ProductsService } from './../../services/products.service';
 import { StaticServiceService } from './../../services/static-service.service';
 import { CardVM } from './../../Models/card-vm';
-import { EventEmitter, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+  EventEmitter,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  OnDestroy,
+} from '@angular/core';
 // import { Icategory } from './../../Models/icategory';
 import { Iproduct } from './../../Models/iproduct';
 import { Component, Input, OnInit } from '@angular/core';
@@ -12,25 +20,47 @@ import { Router } from '@angular/router';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss'],
 })
-export class ProductListComponent implements OnInit, OnChanges {
+export class ProductListComponent implements OnInit, OnChanges, OnDestroy {
   // proList: Iproduct[];
   proListOfCat: Iproduct[] = [];
+  subscribtionArr: Subscription[] = [];
+
   @Input() sentCatId: number = 0;
   @Output() totalPriceChange: EventEmitter<number> = new EventEmitter<number>();
   @Output() itemBought: EventEmitter<CardVM>;
   totalPrice: number = 0;
-  constructor(private staticSer: StaticServiceService, private router: Router) {
+  constructor(
+    // private staticSer: StaticServiceService
+    private staticSer: ProductsService,
+    private router: Router
+  ) {
     // this.totalPriceChange = new EventEmitter<number>();
     this.itemBought = new EventEmitter<CardVM>();
   }
+  ngOnDestroy(): void {
+    for (let subscribe of this.subscribtionArr) {
+      subscribe.unsubscribe();
+    }
+  }
 
   ngOnChanges(): void {
-    this.proListOfCat = this.staticSer.getProductByCatId(this.sentCatId);
+    this.subscribtionArr.push(
+      this.staticSer.getProductByCatId(this.sentCatId).subscribe((products) => {
+        console.log(products);
+        this.proListOfCat = products;
+      })
+    );
     // this.filterProByCat();
   }
   isAvailable: boolean = false;
   ngOnInit(): void {
-    this.proListOfCat = this.staticSer.getAllProduct();
+    let initDataAppear = this.staticSer
+      .getAllProduct()
+      .subscribe((products) => {
+        console.log(products);
+        this.proListOfCat = products;
+      });
+    this.subscribtionArr.push(initDataAppear);
   }
   buy(
     itemPrice: number,

@@ -1,3 +1,4 @@
+import { RegisterComponent } from "./component/register/register.component";
 import { DetailsComponent } from './component/details/details.component';
 import { MainLayoutComponent } from './component/mainLayout/mainLayout.component';
 import { LoginComponent } from './component/login/login.component';
@@ -8,6 +9,7 @@ import { HomeComponent } from './component/home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './Gaurds/auth.guard';
+import { AddProductComponent } from './order/add-product/add-product.component';
 // first path success work
 const routes: Routes = [
   {
@@ -17,6 +19,7 @@ const routes: Routes = [
       { path: '', redirectTo: '/home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'products', component: ProductListComponent },
+      { path: 'products/add', component: AddProductComponent },
       { path: 'products/:pid', component: DetailsComponent },
       {
         path: 'order',
@@ -25,9 +28,10 @@ const routes: Routes = [
       },
     ],
   },
-
+  
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: '**', component: NotFoundComponent },
 ];
 

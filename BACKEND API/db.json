@@ -1,0 +1,66 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "lenovoThinked laptop",
+      "price": 10,
+      "quantity": 1,
+      "imgURL": "https://fakeimg.pl/150/",
+      "categoryId": 1
+    },
+    {
+      "id": 2,
+      "name": "apple macBook laptop",
+      "price": 25,
+      "quantity": 1,
+      "imgURL": "https://fakeimg.pl/150/",
+      "categoryId": 1
+    },
+    {
+      "id": 3,
+      "name": "lenovo tap 2",
+      "price": 30,
+      "quantity": 2,
+      "imgURL": "https://fakeimg.pl/150/",
+      "categoryId": 2
+    },
+    {
+      "id": 4,
+      "name": "apple tap",
+      "price": 2,
+      "quantity": 0,
+      "imgURL": "https://fakeimg.pl/150/",
+      "categoryId": 2
+    },
+    {
+      "id": 5,
+      "name": "samsung Note 10",
+      "price": 50,
+      "quantity": 3,
+      "imgURL": "https://fakeimg.pl/150/",
+      "categoryId": 3
+    },
+    {
+      "id": 6,
+      "name": "samsung Note 100",
+      "price": 5,
+      "quantity": 5,
+      "imgURL": "https://fakeimg.pl/150/",
+      "categoryId": 3
+    }
+  ],
+  "catlist": [
+    {
+      "id": 1,
+      "name": "Laptop"
+    },
+    {
+      "id": 2,
+      "name": "Tap"
+    },
+    {
+      "id": 3,
+      "name": "Note"
+    }
+  ]
+}

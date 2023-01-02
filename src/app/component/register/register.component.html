@@ -1,0 +1,90 @@
+<div class="text-danger ms-3">
+    {{userRegFrm.value | json}}
+    <br>
+    {{fullName?.errors |json}}
+    <br>
+    {{referralOthers?.errors |json}}
+</div>
+<form class="container" [formGroup]="userRegFrm" (ngSubmit)="submit()">
+    <div class="mb-3">
+        <label for="fName">Full Name: </label>
+        <input class="form-control" [class.is-valid]="fullName?.valid"
+            [class.is-invalid]="fullName?.invalid&&fullName?.touched" formControlName="fullName" type="text"
+            name="fullName" id="fName">
+        <div class="alert alert-danger p-2" *ngIf="fullName?.invalid&& userRegFrm.get('fullName')?.touched">
+            <small *ngIf="fullName?.errors?.['required']"> Blease Enter Your Frist
+                Name</small>
+            <small *ngIf="fullName?.errors?.['pattern']&& userRegFrm.get('fullName')?.dirty"> Blease Enter At Least 4
+                Letters <b>"{{fullName?.errors?.['pattern'].actualValue}}"</b> dosen't much </small>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="uEmail">Email: </label>
+        <input class="form-control" id="uEmail" name="userEmail" type="email" [class.is-valid]="email?.valid"
+            [class.is-invalid]="email?.invalid&&email?.touched" formControlName="email">
+        <div class="alert alert-danger p-2" *ngIf="email?.invalid&& userRegFrm.get('email')?.touched">
+            <small *ngIf="email?.errors?.['required']"> Blease Enter Email
+            </small>
+            <small *ngIf="email?.errors?.['existEmail']"> Blease Enter Anather Email as
+                <b>"{{email?.errors?.['existEmail'].value}}"</b> already exist </small>
+        </div>
+    </div>
+    <div formArrayName="phoneNo">
+        <div class="mb-3" *ngFor="let phone of phoneNumbers.controls;let i = index">
+            <label for="{{'uPhone'+i}}">Phone Number-{{i+1}}: </label>
+            <input #input class="form-control" id="{{'uPhone'+i}}" name="userPhone" type="text" [formControlName]="i">
+            <button #add type="button" class="btn btn-primary" [disabled]="!input.classList.contains('ng-dirty')"
+                (click)="addPhone($event.target,i)">add number</button>
+
+            <button [class.ms-3]="!add.classList.contains('d-none')" type="button"
+                [class.d-none]="!add.classList.contains('d-none')&&i!=phoneNumbers.controls.length-1"
+                class="btn btn-primary" (click)="removePhone($event.target,i,add)">remove number</button>
+        </div>
+    </div>
+    <div formGroupName="address">
+        <div class="mb-3">
+            <label for="uCity">City: </label>
+            <input class="form-control" id="uCity" name="userCity" type="text" formControlName="city">
+        </div>
+        <div class="mb-3">
+            <label for="uPostelCode">Postel Code: </label>
+            <input class="form-control" id="uPostelCode" name="userPostel" type="text" formControlName="postelCode">
+        </div>
+        <div class="mb-3">
+            <label for="uStreet">Street: </label>
+            <input class="form-control" id="uStreet" name="userStreet" type="text" formControlName="street">
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="uPass">Password: </label>
+        <input class="form-control" id="uPass" name="userPassword" type="password" formControlName="password">
+
+    </div>
+    <div class="mb-3">
+        <label for="uConformPass">Conform Password: </label>
+        <input class="form-control" id="uConformPass" name="userConformPassword" type="password"
+            formControlName="conformPassword">
+    </div>
+    <div class="btn-group d-block mb-3" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" formControlName="referral" name="referral" id="btnradio1"
+            autocomplete="off" value="socialMedia" (change)="updateReferralValidator()">
+        <label class="btn btn-outline-primary" for="btnradio1">social Media</label>
+
+        <input type="radio" class="btn-check" formControlName="referral" name="referral" id="btnradio2"
+            autocomplete="off" value="friends" (change)="updateReferralValidator()">
+        <label class="btn btn-outline-primary" for="btnradio2">friends</label>
+
+        <input type="radio" class="btn-check" formControlName="referral" name="referral" id="btnradio3"
+            autocomplete="off" value="others" (change)="updateReferralValidator()">
+        <label class="btn btn-outline-primary" for="btnradio3">others</label>
+    </div>
+    <div *ngIf="referral?.value=='others'" class="mb-3 ms-3">
+        <label for="rOther">spicify: </label>
+        <input class="form-control" id="rOther" name="refOther" type="text" formControlName="referralOthers">
+    </div>
+    <button type="button" class="btn btn-primary me-3" (click)="fillForm()">Fill Form</button>
+    <button [disabled]="userRegFrm.invalid" type="submit" class="btn btn-primary">submit</button>
+</form>
+<hr>

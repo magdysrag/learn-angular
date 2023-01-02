@@ -11,7 +11,7 @@ export class StaticServiceService {
   constructor() {
     this.prodList = [
       {
-        id: 100,
+        id: 1,
         name: 'lenovoThinked laptop',
         price: 10,
         quantity: 1,
@@ -19,7 +19,7 @@ export class StaticServiceService {
         categoryId: 1,
       },
       {
-        id: 200,
+        id: 2,
         name: 'apple macBook laptop',
         price: 25,
         quantity: 0,
@@ -27,7 +27,7 @@ export class StaticServiceService {
         categoryId: 1,
       },
       {
-        id: 300,
+        id: 3,
         name: 'lenovo tap 2',
         price: 30,
         quantity: 2,
@@ -35,7 +35,7 @@ export class StaticServiceService {
         categoryId: 2,
       },
       {
-        id: 400,
+        id: 4,
         name: 'apple tap',
         price: 2,
         quantity: 0,
@@ -43,7 +43,7 @@ export class StaticServiceService {
         categoryId: 2,
       },
       {
-        id: 500,
+        id: 5,
         name: 'samsung Note 10',
         price: 50,
         quantity: 3,
@@ -51,7 +51,7 @@ export class StaticServiceService {
         categoryId: 3,
       },
       {
-        id: 600,
+        id: 6,
         name: 'samsung Note 100',
         price: 5,
         quantity: 5,

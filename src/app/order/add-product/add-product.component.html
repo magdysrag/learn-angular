@@ -1,0 +1,42 @@
+<!-- <button type="button" class="btn btn-primary" (click)="addProduct()">save</button> -->
+<div class="text-danger">
+    <h3>To be Removed [for Test]</h3>
+    <div>{{newPrd|json}}</div>
+    <!-- <div>{{prdName.className|json}}</div> -->
+
+</div>
+<hr>
+<form (ngSubmit)="addProduct()">
+    <div class="mb-3">
+        <label for="pname" class="form-label">Product Name</label>
+        <input #prdName="ngModel" type="text" name="prdName" [(ngModel)]="newPrd.name" required pattern="[A-Za-z]{3,}"
+            class="form-control" id="pname">
+        <div class="alert alert-warning" [hidden]="!prdName.invalid||prdName.untouched">
+            <small *ngIf="prdName.errors?.['required']">Name Required</small>
+            <small *ngIf="prdName.errors?.['pattern']">Name must be 3 Letter at Least</small>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="pPrice" class="form-label">Product Price</label>
+        <input #prdPrice="ngModel" type="number" name="prdPrice" [(ngModel)]="newPrd.price" class="form-control"
+            id="pPrice" required min="1" max="20">
+        <div [hidden]="prdPrice.valid||prdPrice.untouched">
+            <small *ngIf="prdPrice.errors?.['range']">Price is Required and must be between 1 and 20</small>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="pQuantity" class="form-label">Product Quantity</label>
+        <input type="number" name="prdQuantity" [(ngModel)]="newPrd.quantity" class="form-control" id="pQuantity">
+    </div>
+    <div class="mb-3">
+        <label for="pCat" class="form-label">Product Category</label>
+        <select [(ngModel)]="newPrd.categoryId" class="form-select form-select-lg" name="cat" id="pCat">
+            <option *ngFor="let item of catlist" [value]="item.id">{{item.name}}</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="pImage" class="form-label">Product Image</label>
+        <input type="file" name="prdImage" [(ngModel)]="newPrd.imgURL" class="form-control" id="pImage">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
